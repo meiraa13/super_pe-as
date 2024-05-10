@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/carro")
@@ -30,5 +31,33 @@ public class CarController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(carId);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Car>> getCarById(@PathVariable Integer id){
+        Optional<Car> car = this.carService.findById(id);
+        if(car.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(car);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCar(@PathVariable Integer id){
+        Optional<Car> car = this.carService.findById(id);
+        if(car.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        this.carService.deleteCar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarRequestDTO body){
+
+        var updatedCar = this.carService.updateCar(body, id);
+        return ResponseEntity.ok().body(updatedCar);
     }
 }
