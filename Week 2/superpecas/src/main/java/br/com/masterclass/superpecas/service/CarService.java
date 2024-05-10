@@ -5,12 +5,14 @@ import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.model.Car;
 import br.com.masterclass.superpecas.repository.CarRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +43,23 @@ public class CarService {
         this.carRepository.save(newCar);
 
         return modelMapper.map(newCar, CarIdDTO.class);
+    }
+
+    public void deleteCar(Integer carId){
+        this.carRepository.deleteById(carId);
+
+    }
+
+    public Optional<Car> findById(Integer id){
+        return this.carRepository.findById(id);
+    }
+
+    public CarResponseDTO updateCar(CarRequestDTO body, Integer id){
+        Car updatedCar = this.carRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("car not found"));
+        modelMapper.map(body, updatedCar);
+        this.carRepository.save(updatedCar);
+
+        return modelMapper.map(updatedCar, CarResponseDTO.class);
+
     }
 }
