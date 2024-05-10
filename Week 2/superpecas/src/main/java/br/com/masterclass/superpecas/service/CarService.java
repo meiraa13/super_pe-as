@@ -1,6 +1,7 @@
 package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
+import br.com.masterclass.superpecas.dto.car.CarManufacturerDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.model.Car;
@@ -56,10 +57,26 @@ public class CarService {
 
     public CarResponseDTO updateCar(CarRequestDTO body, Integer id){
         Car updatedCar = this.carRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("car not found"));
-        modelMapper.map(body, updatedCar);
+        updatedCar.setModelName(body.modelName());
+        updatedCar.setManufacturer(body.manufacturer());
+        updatedCar.setUniqueCode(body.uniqueCode());
+
         this.carRepository.save(updatedCar);
 
         return modelMapper.map(updatedCar, CarResponseDTO.class);
 
+    }
+
+    public List<String> getAllManufacturers(){
+        List<Car> cars = this.carRepository.findAll();
+
+        List<String> carList = new ArrayList<>();
+
+        for(Car car: cars){
+            String manufacturer = car.getManufacturer();
+            carList.add(manufacturer);
+        }
+
+        return carList;
     }
 }

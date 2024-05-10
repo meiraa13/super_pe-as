@@ -1,6 +1,7 @@
 package br.com.masterclass.superpecas.controller;
 
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
+import br.com.masterclass.superpecas.dto.car.CarManufacturerDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.model.Car;
@@ -57,7 +58,13 @@ public class CarController {
     @PutMapping("/{id}")
     public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarRequestDTO body){
 
-        var updatedCar = this.carService.updateCar(body, id);
+        CarResponseDTO updatedCar = this.carService.updateCar(body, id);
         return ResponseEntity.ok().body(updatedCar);
+    }
+
+    @GetMapping("/listaTodosFabricantes")
+    public ResponseEntity<List<String>> getAllManufacturers(){
+        List<String> manufacturers = this.carService.getAllManufacturers();
+        return ResponseEntity.status(HttpStatus.OK).body(manufacturers);
     }
 }
