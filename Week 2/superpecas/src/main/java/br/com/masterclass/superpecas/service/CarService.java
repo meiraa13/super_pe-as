@@ -1,7 +1,6 @@
 package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
-import br.com.masterclass.superpecas.dto.car.CarManufacturerDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.model.Car;
