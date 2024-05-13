@@ -39,21 +39,13 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Car>> getCarById(@PathVariable Integer id){
-        Optional<Car> car = this.carService.findById(id);
-        if(car.isEmpty()){
-            throw new EntityNotFoundException("car not found");
-        }
-
+    public ResponseEntity<CarResponseDTO> getCarById(@PathVariable Integer id){
+        CarResponseDTO car = this.carService.findById(id);
         return ResponseEntity.ok().body(car);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCar(@PathVariable Integer id){
-        Optional<Car> car = this.carService.findById(id);
-        if(car.isEmpty()){
-            throw new EntityNotFoundException("car not found");
-        }
 
         this.carService.deleteCar(id);
         return ResponseEntity.noContent().build();
