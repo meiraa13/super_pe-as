@@ -1,4 +1,14 @@
 package br.com.masterclass.superpecas.dto.car;
 
-public record CarRequestDTO(String modelName, String manufacturer, String uniqueCode) {
-}
+import jakarta.validation.constraints.NotNull;
+
+public record CarRequestDTO(
+        @NotNull
+        String modelName,
+
+        @NotNull
+        String manufacturer,
+
+        @NotNull
+        String uniqueCode
+) { }
