@@ -8,6 +8,8 @@ import br.com.masterclass.superpecas.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,17 +23,18 @@ public class CarService {
     private final CarRepository carRepository;
     private final ModelMapper modelMapper;
 
+    private CarResponseDTO convertToDto(Car car){
+        return modelMapper.map(car, CarResponseDTO.class);
+    }
+
     public List<CarResponseDTO> getCars(){
-        List<Car> cars = this.carRepository.findAll();
+        return this.carRepository.findAll().stream().map(this::convertToDto).toList();
 
-        List<CarResponseDTO> carList = new ArrayList<>();
+    }
 
-        for(Car car: cars){
-            CarResponseDTO carEntityToDto = modelMapper.map(car, CarResponseDTO.class);
-            carList.add(carEntityToDto);
-        }
+    public Page<CarResponseDTO> getPaginatedCar(Pageable pagination){
+        return this.carRepository.findAll(pagination).map(this::convertToDto);
 
-        return carList;
     }
 
     public CarIdDTO createCar(CarRequestDTO body){
