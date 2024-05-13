@@ -49,12 +49,20 @@ public class CarService {
     }
 
     public void deleteCar(Integer carId){
+        Optional<Car> car = this.carRepository.findById(carId);
+        if(car.isEmpty()){
+            throw new EntityNotFoundException("car not found");
+        }
         this.carRepository.deleteById(carId);
 
     }
 
-    public Optional<Car> findById(Integer id){
-        return this.carRepository.findById(id);
+    public CarResponseDTO findById(Integer id){
+        Optional<Car> car = this.carRepository.findById(id);
+        if(car.isEmpty()){
+            throw new EntityNotFoundException();
+        }
+        return modelMapper.map(car, CarResponseDTO.class);
     }
 
     public CarResponseDTO updateCar(CarRequestDTO body, Integer id){
