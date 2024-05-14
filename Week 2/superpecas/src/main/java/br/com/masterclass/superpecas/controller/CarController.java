@@ -3,9 +3,9 @@ package br.com.masterclass.superpecas.controller;
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
-import br.com.masterclass.superpecas.model.Car;
 import br.com.masterclass.superpecas.service.CarService;
-import jakarta.persistence.EntityNotFoundException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/carro")
@@ -24,12 +23,14 @@ import java.util.Optional;
 public class CarController {
     private final CarService carService;
 
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
     @GetMapping("/listaTodos")
     public ResponseEntity<List<CarResponseDTO>> getCars(){
         List<CarResponseDTO> cars = this.carService.getCars();
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
+    @Tag(name = "CREATE A CAR")
     @PostMapping
     public ResponseEntity<CarIdDTO> createCar(@RequestBody @Valid CarRequestDTO body){
         CarIdDTO carId = this.carService.createCar(body);
@@ -38,12 +39,14 @@ public class CarController {
 
     }
 
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
     @GetMapping("/{id}")
     public ResponseEntity<CarResponseDTO> getCarById(@PathVariable Integer id){
         CarResponseDTO car = this.carService.findById(id);
         return ResponseEntity.ok().body(car);
     }
 
+    @Tag(name = "DELETE A CAR")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCar(@PathVariable Integer id){
 
@@ -51,6 +54,8 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
+    @Tag(name = "UPDATE A CAR" )
+    @Operation(summary = "updates a car", description = "updates all car fields")
     @PutMapping("/{id}")
     public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarRequestDTO body){
 
@@ -58,12 +63,14 @@ public class CarController {
         return ResponseEntity.ok().body(updatedCar);
     }
 
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
     @GetMapping("/listaTodosFabricantes")
     public ResponseEntity<List<String>> getAllManufacturers(){
         List<String> manufacturers = this.carService.getAllManufacturers();
         return ResponseEntity.status(HttpStatus.OK).body(manufacturers);
     }
 
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
     @GetMapping("/listaTodosPaginado")
     public ResponseEntity<Page<CarResponseDTO>> getPaginatedCars(@PageableDefault(size = 10) Pageable pagination){
         Page<CarResponseDTO> cars = this.carService.getPaginatedCar(pagination);
