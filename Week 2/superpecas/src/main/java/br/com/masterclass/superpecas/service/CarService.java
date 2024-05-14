@@ -1,8 +1,9 @@
 package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
-import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
+import br.com.masterclass.superpecas.dto.car.CarUpdateDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
+import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.model.Car;
 import br.com.masterclass.superpecas.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,14 +39,17 @@ public class CarService {
     }
 
     public CarIdDTO createCar(CarRequestDTO body){
-        Car newCar = new Car();
+        Car mappedModel = modelMapper.map(body, Car.class);
+
+        //or
+        /*Car newCar = new Car();
         newCar.setModelName(body.modelName());
         newCar.setManufacturer(body.manufacturer());
-        newCar.setUniqueCode(body.uniqueCode());
+        newCar.setUniqueCode(body.uniqueCode());*/
 
-        this.carRepository.save(newCar);
+        this.carRepository.save(mappedModel);
 
-        return modelMapper.map(newCar, CarIdDTO.class);
+        return modelMapper.map(mappedModel, CarIdDTO.class);
     }
 
     public void deleteCar(Integer carId){
@@ -65,7 +69,7 @@ public class CarService {
         return modelMapper.map(car, CarResponseDTO.class);
     }
 
-    public CarResponseDTO updateCar(CarRequestDTO body, Integer id){
+    public CarResponseDTO updateCar(CarUpdateDTO body, Integer id){
         Car updatedCar = this.carRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("car not found"));
         updatedCar.setModelName(body.modelName());
         updatedCar.setManufacturer(body.manufacturer());
@@ -87,6 +91,27 @@ public class CarService {
             carList.add(manufacturer);
         }
 
+        return carList;
+    }
+
+    public List<CarResponseDTO> getTop10CarsWithPieces() {
+        List<Car> cars = carRepository.findByTop10ByOrderByPieceCountDesc();
+        List<CarResponseDTO> carList = new ArrayList<>();
+        for(Car car: cars){
+            CarResponseDTO mappedCar = modelMapper.map(car, CarResponseDTO.class);
+            carList.add(mappedCar);
+        }
+        return carList;
+
+    }
+
+    public List<CarResponseDTO> getTopManufacturers() {
+        List<Car> cars = carRepository.findByTop10Manufacturers();
+        List<CarResponseDTO> carList = new ArrayList<>();
+        for(Car car: cars){
+            CarResponseDTO mappedCar = modelMapper.map(car, CarResponseDTO.class);
+            carList.add(mappedCar);
+        }
         return carList;
     }
 }
