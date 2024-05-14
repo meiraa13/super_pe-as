@@ -1,12 +1,12 @@
 package br.com.masterclass.superpecas.controller;
 
 import br.com.masterclass.superpecas.dto.car.CarIdDTO;
-import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
+import br.com.masterclass.superpecas.dto.car.CarUpdateDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
+import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +32,7 @@ public class CarController {
 
     @Tag(name = "CREATE A CAR")
     @PostMapping
-    public ResponseEntity<CarIdDTO> createCar(@RequestBody @Valid CarRequestDTO body){
+    public ResponseEntity<CarIdDTO> createCar(@RequestBody CarRequestDTO body){
         CarIdDTO carId = this.carService.createCar(body);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(carId);
@@ -57,7 +57,7 @@ public class CarController {
     @Tag(name = "UPDATE A CAR" )
     @Operation(summary = "updates a car", description = "updates all car fields")
     @PutMapping("/{id}")
-    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarRequestDTO body){
+    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarUpdateDTO body){
 
         CarResponseDTO updatedCar = this.carService.updateCar(body, id);
         return ResponseEntity.ok().body(updatedCar);
@@ -75,5 +75,19 @@ public class CarController {
     public ResponseEntity<Page<CarResponseDTO>> getPaginatedCars(@PageableDefault(size = 10) Pageable pagination){
         Page<CarResponseDTO> cars = this.carService.getPaginatedCar(pagination);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
+    }
+
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @GetMapping("/listaTop10CarroComMaisPecas")
+    public ResponseEntity<List<CarResponseDTO>> getTop10CarsWithPieces(){
+        List<CarResponseDTO> cars = carService.getTop10CarsWithPieces();
+        return ResponseEntity.ok().body(cars);
+    }
+
+    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @GetMapping("/listaTop10Fabricantes")
+    public ResponseEntity<List<CarResponseDTO>> getTopManufacturers(){
+        List<CarResponseDTO> cars = carService.getTopManufacturers();
+        return ResponseEntity.ok().body(cars);
     }
 }
