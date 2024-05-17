@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
 })
 export class FormComponent {
   registerForm = new FormGroup({
-    title: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-    content: new FormControl(null, Validators.required)
+    title: new FormControl<string | null>(null, [Validators.required, Validators.minLength(3)]),
+    content: new FormControl<string | null>(null, Validators.required)
 
   })
 
@@ -29,7 +29,8 @@ export class FormComponent {
   }
 
   handleSubmit(){
-    this.todoService.setTodo(this.registerForm.value)
+    const data = this.registerForm.value as TTodoRequest
+    this.todoService.setTodo(data)
 
     this.registerForm.reset()
 
