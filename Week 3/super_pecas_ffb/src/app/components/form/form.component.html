@@ -1,0 +1,11 @@
+<form [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
+  <div>
+    <input placeholder="titulo" type="text" formControlName="title">
+    <p *ngIf="title?.errors?.['minlength']">campo obrigatório</p>
+  </div>
+  <div>
+    <input placeholder="descrição" type="text" formControlName="content">
+    <p *ngIf="content?.errors?.['required'] && content?.value !== null">campo obrigatório</p>
+  </div>
+  <button type="submit">Enviar</button>
+</form>
