@@ -10,7 +10,7 @@ export class TodoService {
     return this.todoList()
   }
 
-  setTodo(data: any){
+  setTodo(data: TTodoRequest){
     const newTodo:ITodo = {
       ...data,
       id: crypto.randomUUID()
