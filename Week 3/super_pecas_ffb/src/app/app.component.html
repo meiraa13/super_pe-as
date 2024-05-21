@@ -1,16 +1,5 @@
-<main>
-  <h3>Todo List</h3>
-  <app-form></app-form>
-  <ul *ngIf="todoList.length > 0; else mensagemPadrao">
-    <app-todo-card
-    *ngFor="let list of todoList"
-    [todo]="list"
-    ></app-todo-card>
-  </ul>
-  <ng-template #mensagemPadrao>
-    <p>Nenhuma tarefa criada</p>
-  </ng-template>
-
+<main class="bg-slate-500 h-full text-white">
+  <h2>Hello, world!</h2>
 
 
 </main>
