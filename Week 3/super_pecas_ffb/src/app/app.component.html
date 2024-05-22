@@ -1,8 +1,12 @@
-<main class="bg-slate-500 h-full text-white">
-  <h2>Hello, world!</h2>
+<main class="flex w-screen bg-slate-400 h-full">
+  <app-sidebar
+  class="border-solid border-2 w-2/12 border-black bg-slate-100 h-full p-5 flex flex-col gap-5 items-center">
+  </app-sidebar>
+  <div class="h-full border-solid border-2 border-black w-10/12 p-5">
+    <router-outlet></router-outlet>
+  </div>
 
 
 </main>
 
 
-<router-outlet></router-outlet>
