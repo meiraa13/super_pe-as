@@ -1,32 +1,9 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
-
-
-export interface ITable {
-  id: number;
-  name: string;
-  manufacturer: string;
-  code: string;
-}
-
-const ELEMENT_DATA: ITable[] = [
-  {id: 1, name: 'Civic', manufacturer: 'Honda', code: 'HJQQER424'},
-  {id: 2, name: 'A4', manufacturer: 'Audi', code: 'HJQQfaer4'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-  {id: 3, name: 'Polo', manufacturer: 'Volkswagen', code: '1RFQER424'},
-
-];
+import { CarService } from '../../services/car.service';
+import { ICar } from '../../interfaces/car.interface';
 
 
 @Component({
@@ -36,14 +13,22 @@ const ELEMENT_DATA: ITable[] = [
   templateUrl: './car-table.component.html',
   styleUrl: './car-table.component.css'
 })
-export class CarTableComponent implements AfterViewInit {
+export class CarTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'manufacturer', 'code', 'actions'];
-  dataSource = new MatTableDataSource<ITable>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<ICar>;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(private carService:CarService){}
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator
+  //@ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngOnInit(): void {
+      this.carService.getCars()
+      .subscribe(cars => {
+        this.dataSource = new MatTableDataSource<ICar>(cars)
+      })
   }
+  // ngAfterViewInit(): void {
+  //   this.dataSource.paginator = this.paginator
+  // }
 
 }

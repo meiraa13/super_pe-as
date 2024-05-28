@@ -17,7 +17,7 @@ import { CarTableComponent } from '../../components/car-table/car-table.componen
     MatInputModule,
     FormsModule,
     MatIconModule,
-    CarTableComponent
+    CarTableComponent,
   ],
   templateUrl: './car.component.html',
   styleUrl: './car.component.css'
