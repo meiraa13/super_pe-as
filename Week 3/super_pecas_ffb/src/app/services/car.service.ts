@@ -15,7 +15,10 @@ export class CarService {
   }
 
   createCar(data:TCarRequest){
-    console.log("oi")
-    return this.http.post(`${this.baseUrl}/carro`, data)
+    return this.http.post<ICarResponse>(`${this.baseUrl}/carro`, data)
+  }
+
+  deleteCar(id:any){
+    return this.http.delete(`${this.baseUrl}/carro/${id}`)
   }
 }

@@ -6,8 +6,8 @@ import { MatButtonModule } from '@angular/material/button'
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TCarRequest } from '../../interfaces/car.interface';
-import { CarService } from '../../services/car.service';
 import { Validators } from '@angular/forms';
+import { CarService } from '../../services/car.service';
 
 
 @Component({
@@ -49,7 +49,6 @@ export class CreateCarDialogComponent implements OnInit {
 
   createCar(){
     const data = this.form.value as TCarRequest
-    console.log(data)
     this.carService.createCar(data).subscribe()
 
   }
