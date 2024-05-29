@@ -1,6 +1,6 @@
 <h2>Encontre seu carro!</h2>
 <div class="flex justify-between items-center h-10">
-  <button class="h-full" mat-flat-button>Cadastrar carro</button>
+  <button class="h-full" (click)="openDialog()" mat-flat-button>Cadastrar carro</button>
   <form class="h-full">
     <div class="h-full bg-white flex rounded-md">
       <input class="p-1 rounded-md" placeholder="Pesquisar">
@@ -11,4 +11,3 @@
   </form>
 </div>
 <app-car-table></app-car-table>
-
