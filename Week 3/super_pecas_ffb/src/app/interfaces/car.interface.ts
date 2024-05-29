@@ -7,6 +7,11 @@ export interface ICar {
 
 }
 
+export type TCarRequest = Omit<ICar, "id" | "pieces">
+
+export interface ICarResponse {
+  id:number
+}
 
 export interface IPiece {
   id:number,
