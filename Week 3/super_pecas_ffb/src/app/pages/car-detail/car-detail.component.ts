@@ -21,8 +21,13 @@ export class CarDetailComponent implements OnInit {
     //this.id = this.activatedRoute.snapshot.url[1].path)
     //or
     this.activatedRoute.paramMap.subscribe((params)=>{
-      this.carService.getCarById(params.get('id')).subscribe((data)=>{
-        this.car = data
+      this.carService.getCarById(params.get('id')).subscribe({
+        next: (data)=>{
+          this.car = data
+        },
+        error:(err)=>{
+          console.log(err)
+        }
       })
 
     })

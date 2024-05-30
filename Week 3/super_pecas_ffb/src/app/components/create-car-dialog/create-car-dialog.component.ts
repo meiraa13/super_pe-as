@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { TCarRequest } from '../../interfaces/car.interface';
 import { Validators } from '@angular/forms';
 import { CarService } from '../../services/car.service';
+import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { CarService } from '../../services/car.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
   templateUrl: './create-car-dialog.component.html',
   styleUrl: './create-car-dialog.component.css'
@@ -28,19 +30,20 @@ export class CreateCarDialogComponent implements OnInit {
   form!: FormGroup
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:any,
-    private ref:MatDialogRef<CreateCarDialogComponent>,
-    private formBuilder: FormBuilder,
-    private carService:CarService
+    @Inject(MAT_DIALOG_DATA) public _dialogData:any,
+    private _ref:MatDialogRef<CreateCarDialogComponent>,
+    private _formBuilder: FormBuilder,
+    private _carService:CarService,
+    private _snackBar:MatSnackBar
   ){}
 
   closeDialog(){
-    this.ref.close()
+    this._ref.close()
   }
 
   ngOnInit(): void {
-    this.inputData = this.data
-    this.form = this.formBuilder.group({
+    this.inputData = this._dialogData
+    this.form = this._formBuilder.group({
       modelName:['', [Validators.required]],
       manufacturer:['', [Validators.required]],
       uniqueCode:['', [Validators.required]]
@@ -49,8 +52,23 @@ export class CreateCarDialogComponent implements OnInit {
 
   createCar(){
     const data = this.form.value as TCarRequest
-    this.carService.createCar(data).subscribe((data)=>{
-      window.location.reload()
+    this._carService.createCar(data).subscribe({
+      next:(res)=>{
+        this._snackBar.open("criado com sucesso", 'ok',{
+          duration:1000,
+          verticalPosition:'top'
+        })
+        setTimeout(()=>{
+          window.location.reload()
+        },1000)
+
+      },error:(err)=>{
+        console.log(err)
+        this._snackBar.open("erro na requisição", 'ok',{
+          duration:1000,
+          verticalPosition:'top'
+        })
+      }
     })
 
   }
