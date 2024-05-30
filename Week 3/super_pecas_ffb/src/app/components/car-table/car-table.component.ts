@@ -3,6 +3,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { CarService } from '../../services/car.service';
 import { ICar } from '../../interfaces/car.interface';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 
@@ -16,7 +17,7 @@ import { CommonModule } from '@angular/common';
 export class CarTableComponent implements OnInit  {
   readonly carList = signal<ICar[]>([])
 
-  constructor(private carService:CarService){}
+  constructor(private carService:CarService, private router: Router){}
 
   ngOnInit(): void {
       this.carService.getCars().subscribe((data)=>{
@@ -28,5 +29,9 @@ export class CarTableComponent implements OnInit  {
     this.carService.deleteCar(id).subscribe((data)=>{
       this.carList.update((currentList)=> currentList.filter((item)=>item.id !== id))
     })
+  }
+
+  carDetail(productId:number){
+    this.router.navigate(['car', productId])
   }
 }

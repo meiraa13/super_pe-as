@@ -49,7 +49,9 @@ export class CreateCarDialogComponent implements OnInit {
 
   createCar(){
     const data = this.form.value as TCarRequest
-    this.carService.createCar(data).subscribe()
+    this.carService.createCar(data).subscribe((data)=>{
+      window.location.reload()
+    })
 
   }
 }

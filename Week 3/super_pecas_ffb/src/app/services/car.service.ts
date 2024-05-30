@@ -14,6 +14,12 @@ export class CarService {
     return this.http.get<ICar[]>(`${this.baseUrl}/carro/listaTodos`)
   }
 
+
+  getCarById(id:string | null){
+    return this.http.get<ICar>(`${this.baseUrl}/carro/${id}`)
+  }
+
+
   createCar(data:TCarRequest){
     return this.http.post<ICarResponse>(`${this.baseUrl}/carro`, data)
   }
