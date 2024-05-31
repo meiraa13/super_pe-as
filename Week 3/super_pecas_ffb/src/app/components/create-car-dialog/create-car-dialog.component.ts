@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button'
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { TCarRequest } from '../../interfaces/car.interface';
+import { ICreateDialog, TCarRequest } from '../../interfaces/car.interface';
 import { Validators } from '@angular/forms';
 import { CarService } from '../../services/car.service';
 import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
@@ -25,24 +25,22 @@ import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './create-car-dialog.component.html',
   styleUrl: './create-car-dialog.component.css'
 })
+
 export class CreateCarDialogComponent implements OnInit {
   inputData:any
   form!: FormGroup
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public _dialogData:any,
+    @Inject(MAT_DIALOG_DATA) public _dialogData:ICreateDialog,
     private _ref:MatDialogRef<CreateCarDialogComponent>,
     private _formBuilder: FormBuilder,
     private _carService:CarService,
     private _snackBar:MatSnackBar
   ){}
 
-  closeDialog(){
-    this._ref.close()
-  }
 
   ngOnInit(): void {
-    this.inputData = this._dialogData
+    this.inputData = this._dialogData.title
     this.form = this._formBuilder.group({
       modelName:['', [Validators.required]],
       manufacturer:['', [Validators.required]],
@@ -58,9 +56,7 @@ export class CreateCarDialogComponent implements OnInit {
           duration:1000,
           verticalPosition:'top'
         })
-        setTimeout(()=>{
-          window.location.reload()
-        },1000)
+        this._dialogData.list.update((current)=>[...current ])
 
       },error:(err)=>{
         console.log(err)

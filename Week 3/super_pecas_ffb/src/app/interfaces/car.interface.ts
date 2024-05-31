@@ -1,3 +1,5 @@
+import { WritableSignal } from "@angular/core"
+
 export interface ICar {
   id: number,
   modelName:string,
@@ -20,4 +22,16 @@ export interface IPiece {
   serialNumber:string,
   pieceManufacturer:string,
   carModel:string
+}
+
+
+export interface IDeleteDialog {
+  id:number,
+  list:WritableSignal<ICar[]>
+}
+
+
+export interface ICreateDialog {
+  title:string,
+  list:WritableSignal<ICar[]>
 }
