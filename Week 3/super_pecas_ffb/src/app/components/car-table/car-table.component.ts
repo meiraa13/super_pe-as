@@ -1,56 +1,42 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Input, WritableSignal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import { CarService } from '../../services/car.service';
 import { ICar } from '../../interfaces/car.interface';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 
 
 @Component({
   selector: 'app-car-table',
   standalone: true,
-  imports: [ MatIconModule, CommonModule, MatSnackBarModule],
+  imports: [ MatIconModule, CommonModule, MatSnackBarModule, MatDialogModule],
   templateUrl: './car-table.component.html',
   styleUrl: './car-table.component.css'
 })
-export class CarTableComponent implements OnInit  {
-  readonly carList = signal<ICar[]>([])
+export class CarTableComponent   {
+  @Input() carList!:WritableSignal<ICar[]>
 
   constructor(
-    private carService:CarService,
-    private router: Router,
-    private snackBar:MatSnackBar
+    private _router: Router,
+    private _dialog: MatDialog
   ){}
 
-  ngOnInit(): void {
-      this.carService.getCars().subscribe((data)=>{
-        this.carList.set(data)
-      })
-  }
 
-  deleteCar(id:any){
-    this.carService.deleteCar(id).subscribe({
-      next:(res)=>{
-        this.carList.update((currentList)=> currentList.filter((item)=>item.id !== id))
-        this.snackBar.open("Deletado com sucesso", 'ok',{
-          duration:1000,
-          verticalPosition:'top'
-        })
-
-
-      },error:(err)=>{
-        console.log(err)
-        this.snackBar.open("erro na requisição", 'ok',{
-          duration:1000,
-          verticalPosition:'top'
-        })
-      }
-    })
-  }
 
   carDetail(productId:number){
-    this.router.navigate(['car', productId])
+    this._router.navigate(['car', productId])
+  }
+
+  openDialog(id:number){
+    this._dialog.open(DeleteConfirmationDialogComponent,{
+      width:"30%",
+      data:{
+        id:id,
+        list:this.carList
+      }
+    })
   }
 }
