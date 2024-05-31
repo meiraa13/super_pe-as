@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car,Integer> {
 
@@ -16,4 +17,6 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
             "GROUP BY c.manufacturer " +
             "ORDER BY manufacturerCount DESC")
     List<Car> findByTop10Manufacturers();
+
+    Optional<Car> findByUniqueCode(String uniqueCode);
 }

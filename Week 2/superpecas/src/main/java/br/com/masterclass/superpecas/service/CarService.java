@@ -6,6 +6,7 @@ import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
 import br.com.masterclass.superpecas.model.Car;
 import br.com.masterclass.superpecas.repository.CarRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,6 +40,10 @@ public class CarService {
     }
 
     public CarIdDTO createCar(CarRequestDTO body){
+        Optional<Car> car = this.carRepository.findByUniqueCode(body.getUniqueCode());
+        if(car.isPresent()){
+            throw new EntityExistsException("unique code already exists");
+        }
         Car mappedModel = modelMapper.map(body, Car.class);
 
         //or
