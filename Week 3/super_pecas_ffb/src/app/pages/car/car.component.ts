@@ -30,7 +30,7 @@ import { CarService } from '../../services/car.service';
 })
 export class CarComponent implements OnInit {
 
-  readonly carList = signal<ICar[]>([])
+  carList = signal<ICar[]>([])
 
   constructor(
     private _dialog:MatDialog,

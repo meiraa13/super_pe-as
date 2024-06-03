@@ -1,6 +1,5 @@
 package br.com.masterclass.superpecas.controller;
 
-import br.com.masterclass.superpecas.dto.car.CarIdDTO;
 import br.com.masterclass.superpecas.dto.car.CarUpdateDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
@@ -23,30 +22,34 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get all cars")
     @GetMapping("/listaTodos")
     public ResponseEntity<List<CarResponseDTO>> getCars(){
         List<CarResponseDTO> cars = this.carService.getCars();
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @Tag(name = "CREATE A CAR")
+    @Tag(name = "Cars")
+    @Operation(summary = "create a car")
     @PostMapping
-    public ResponseEntity<CarIdDTO> createCar(@RequestBody CarRequestDTO body){
-        CarIdDTO carId = this.carService.createCar(body);
+    public ResponseEntity<CarResponseDTO> createCar(@RequestBody CarRequestDTO body){
+        CarResponseDTO car = this.carService.createCar(body);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(carId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(car);
 
     }
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get car by id")
     @GetMapping("/{id}")
     public ResponseEntity<CarResponseDTO> getCarById(@PathVariable Integer id){
         CarResponseDTO car = this.carService.findById(id);
         return ResponseEntity.ok().body(car);
     }
 
-    @Tag(name = "DELETE A CAR")
+    @Tag(name = "Cars")
+    @Operation(summary = "delete a car")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCar(@PathVariable Integer id){
 
@@ -54,8 +57,8 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
-    @Tag(name = "UPDATE A CAR" )
-    @Operation(summary = "updates a car", description = "updates all car fields")
+    @Tag(name = "Cars")
+    @Operation(summary = "update a car", description = "updates all car fields")
     @PutMapping("/{id}")
     public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer id, @RequestBody CarUpdateDTO body){
 
@@ -63,28 +66,32 @@ public class CarController {
         return ResponseEntity.ok().body(updatedCar);
     }
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get all manufacturers")
     @GetMapping("/listaTodosFabricantes")
     public ResponseEntity<List<String>> getAllManufacturers(){
         List<String> manufacturers = this.carService.getAllManufacturers();
         return ResponseEntity.status(HttpStatus.OK).body(manufacturers);
     }
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get paginated cars")
     @GetMapping("/listaTodosPaginado")
     public ResponseEntity<Page<CarResponseDTO>> getPaginatedCars(@PageableDefault(size = 10) Pageable pagination){
         Page<CarResponseDTO> cars = this.carService.getPaginatedCar(pagination);
         return ResponseEntity.status(HttpStatus.OK).body(cars);
     }
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get top10 cars with more pieces")
     @GetMapping("/listaTop10CarroComMaisPecas")
     public ResponseEntity<List<CarResponseDTO>> getTop10CarsWithPieces(){
         List<CarResponseDTO> cars = carService.getTop10CarsWithPieces();
         return ResponseEntity.ok().body(cars);
     }
 
-    @Tag(name = "GET CAR", description = "GET methods for Cars")
+    @Tag(name = "Cars")
+    @Operation(summary = "get top10 manufacturers")
     @GetMapping("/listaTop10Fabricantes")
     public ResponseEntity<List<CarResponseDTO>> getTopManufacturers(){
         List<CarResponseDTO> cars = carService.getTopManufacturers();
