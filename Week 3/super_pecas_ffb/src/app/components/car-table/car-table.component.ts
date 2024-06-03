@@ -18,6 +18,8 @@ import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog
 })
 export class CarTableComponent   {
   @Input() carList!:WritableSignal<ICar[]>
+  //or
+  //carList = input.required<ICar[]>()
 
   constructor(
     private _router: Router,

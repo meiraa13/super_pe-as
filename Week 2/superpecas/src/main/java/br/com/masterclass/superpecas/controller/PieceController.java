@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 public class PieceController {
     private final PieceService pieceService;
 
-    @Tag(name = "CREATE A PIECE")
+    @Tag(name = "Pieces")
+    @Operation(summary = "create a piece")
     @PostMapping
     public ResponseEntity<Piece> createPiece(@RequestBody @Valid PieceRequestDTO body){
         Piece newPiece = this.pieceService.createPiece(body);
@@ -31,28 +32,31 @@ public class PieceController {
 
     }
 
-    @Tag(name = "GET PIECE", description = "GET methods for Pieces")
+    @Tag(name = "Pieces")
+    @Operation(summary = "get paginated pieces")
     @GetMapping("listaTodosPaginado")
     public ResponseEntity<Page<PieceResponseDTO>> getAllPieces(Pageable pagination){
         Page<PieceResponseDTO> pieces = this.pieceService.getAllPieces(pagination);
         return ResponseEntity.status(HttpStatus.OK).body(pieces);
     }
 
-    @Tag(name = "GET PIECE", description = "GET methods for Pieces")
+    @Tag(name = "Pieces")
+    @Operation(summary = "get piece by id")
     @GetMapping("{id}")
     public ResponseEntity<PieceResponseDTO> getPieceById(@PathVariable Integer id){
         PieceResponseDTO piece = this.pieceService.getPieceById(id);
         return ResponseEntity.ok().body(piece);
     }
 
-    @Tag(name = "DELETE PIECE")
+    @Tag(name = "Pieces")
+    @Operation(summary = "delete a piece")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletePiece(@PathVariable Integer id){
         this.pieceService.deletePiece(id);
         return ResponseEntity.noContent().build();
     }
 
-    @Tag(name = "UPDATE PIECE")
+    @Tag(name = "Pieces")
     @Operation(summary = "update a piece", description = "updates all piece fields")
     @PutMapping
     public ResponseEntity<PieceResponseDTO> updatePiece(@RequestBody PieceUpdateDTO body){

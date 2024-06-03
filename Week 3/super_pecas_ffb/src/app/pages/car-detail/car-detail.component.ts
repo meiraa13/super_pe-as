@@ -5,6 +5,7 @@ import { ICar } from '../../interfaces/car.interface';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-car-detail',

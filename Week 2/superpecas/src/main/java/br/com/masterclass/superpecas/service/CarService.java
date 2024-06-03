@@ -1,6 +1,5 @@
 package br.com.masterclass.superpecas.service;
 
-import br.com.masterclass.superpecas.dto.car.CarIdDTO;
 import br.com.masterclass.superpecas.dto.car.CarUpdateDTO;
 import br.com.masterclass.superpecas.dto.car.CarResponseDTO;
 import br.com.masterclass.superpecas.dto.car.CarRequestDTO;
@@ -39,7 +38,7 @@ public class CarService {
 
     }
 
-    public CarIdDTO createCar(CarRequestDTO body){
+    public CarResponseDTO createCar(CarRequestDTO body){
         Optional<Car> car = this.carRepository.findByUniqueCode(body.getUniqueCode());
         if(car.isPresent()){
             throw new EntityExistsException("unique code already exists");
@@ -54,7 +53,7 @@ public class CarService {
 
         this.carRepository.save(mappedModel);
 
-        return modelMapper.map(mappedModel, CarIdDTO.class);
+        return modelMapper.map(mappedModel, CarResponseDTO.class);
     }
 
     public void deleteCar(Integer carId){
