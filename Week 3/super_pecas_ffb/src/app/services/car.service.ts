@@ -24,6 +24,10 @@ export class CarService {
     return this.http.post<ICar>(`${this.baseUrl}/carro`, data)
   }
 
+  updateCar(id:string, data:TCarRequest){
+    return this.http.put(`${this.baseUrl}/carro/${id}`, data)
+  }
+
   deleteCar(id:any){
     return this.http.delete(`${this.baseUrl}/carro/${id}`)
   }

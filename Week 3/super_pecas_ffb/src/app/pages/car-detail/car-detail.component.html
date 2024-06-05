@@ -7,7 +7,13 @@
     <img mat-card-image class="img" [src]="car.uniqueCode">
     <mat-card-actions class="flex gap-3">
       <button mat-stroked-button color="primary">EDITAR</button>
-      <button mat-stroked-button color="warn">EXCLUIR</button>
+      <button 
+      mat-stroked-button 
+      color="warn" 
+      (click)="openDeleteDialog()" 
+      mat-dialog-close
+      >EXCLUIR
+      </button>
     </mat-card-actions>
     <a href="/car" mat-button>
       <mat-icon>arrow_back</mat-icon>

@@ -24,6 +24,7 @@ export class DeleteConfirmationDialogComponent {
   ){}
 
   deleteCar(){
+    console.log(this._dialogData)
     this._carService.deleteCar(this._dialogData.id).subscribe({
       next:(res)=>{
         this._dialogData.list.update((currentList)=> currentList.filter((item)=>item.id !== this._dialogData.id))
