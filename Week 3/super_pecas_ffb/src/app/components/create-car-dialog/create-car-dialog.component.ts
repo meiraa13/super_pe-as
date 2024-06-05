@@ -56,7 +56,7 @@ export class CreateCarDialogComponent implements OnInit {
           duration:1000,
           verticalPosition:'top'
         })
-        this._dialogData.list.update((current)=>[...current ])
+        this._dialogData.list.update((current)=>[...current, res ])
 
       },error:(err)=>{
         console.log(err)

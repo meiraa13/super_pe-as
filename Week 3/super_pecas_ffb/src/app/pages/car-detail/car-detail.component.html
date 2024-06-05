@@ -4,17 +4,14 @@
       <mat-card-title>{{car.modelName}}</mat-card-title>
       <mat-card-subtitle>{{car.manufacturer}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <p>Código unico: {{car.uniqueCode}}</p>
-      <p></p>
-    </mat-card-content>
+    <img mat-card-image class="img" [src]="car.uniqueCode">
     <mat-card-actions class="flex gap-3">
       <button mat-stroked-button color="primary">EDITAR</button>
       <button mat-stroked-button color="warn">EXCLUIR</button>
     </mat-card-actions>
-    <button mat-button>
+    <a href="/car" mat-button>
       <mat-icon>arrow_back</mat-icon>
-    </button>
+    </a>
   </mat-card>
 
 </div>
