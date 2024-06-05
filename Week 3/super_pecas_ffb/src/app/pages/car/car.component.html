@@ -10,4 +10,7 @@
     </div>
   </form>
 </div>
-<app-car-table [carList]="carList"></app-car-table>
+<app-car-table *ngIf="carList().length > 0; else message" [carList]="carList"></app-car-table>
+<ng-template #message>
+  <h2>O sistema não possui nenhum carro cadastrado</h2>
+</ng-template>

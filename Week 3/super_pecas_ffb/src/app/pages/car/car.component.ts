@@ -9,7 +9,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { CreateCarDialogComponent } from '../../components/create-car-dialog/create-car-dialog.component';
 import { ICar } from '../../interfaces/car.interface';
 import { CarService } from '../../services/car.service';
-
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -23,6 +23,7 @@ import { CarService } from '../../services/car.service';
     MatIconModule,
     CarTableComponent,
     MatDialogModule,
+    CommonModule
 
   ],
   templateUrl: './car.component.html',

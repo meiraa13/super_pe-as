@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICar, ICarResponse, TCarRequest } from '../interfaces/car.interface';
+import { ICar, TCarRequest } from '../interfaces/car.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class CarService {
 
 
   createCar(data:TCarRequest){
-    return this.http.post<ICarResponse>(`${this.baseUrl}/carro`, data)
+    return this.http.post<ICar>(`${this.baseUrl}/carro`, data)
   }
 
   deleteCar(id:any){
