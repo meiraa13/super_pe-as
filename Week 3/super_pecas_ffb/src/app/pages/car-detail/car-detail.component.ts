@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../../services/car.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ICar } from '../../interfaces/car.interface';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button'
@@ -11,7 +11,7 @@ import { DeleteConfirmationDialogComponent } from '../../components/delete-confi
 @Component({
   selector: 'app-car-detail',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule,MatIconModule, MatDialogModule],
+  imports: [MatCardModule, MatButtonModule,MatIconModule, MatDialogModule, RouterLink],
   templateUrl: './car-detail.component.html',
   styleUrl: './car-detail.component.css'
 })
