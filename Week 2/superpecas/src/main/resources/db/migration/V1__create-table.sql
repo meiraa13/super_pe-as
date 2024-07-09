@@ -13,7 +13,7 @@ CREATE TABLE users (
   id varchar(255) PRIMARY KEY,
   name varchar(255) NOT NULL,
   email varchar(255) UNIQUE NOT NULL,
-  cpf varchar(255) NOT NULL,
+  password varchar(255) NOT NULL,
   isAdmin bool DEFAULT false
 );
 
