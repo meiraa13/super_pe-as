@@ -1,7 +1,6 @@
 package br.com.masterclass.superpecas.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,17 +20,19 @@ public class User {
     private String id;
 
     @Column(nullable = false)
-    @NotNull
     private String name;
 
     @Column(nullable = false)
-    @NotNull
     private String email;
 
     @Column(nullable = false)
-    @NotNull
-    private String cpf;
+    private String password;
 
     @Column()
     private boolean isAdmin;
+
+    @Override
+    public String toString(){
+        return "name: " + name + "password: " + password;
+    }
 }
